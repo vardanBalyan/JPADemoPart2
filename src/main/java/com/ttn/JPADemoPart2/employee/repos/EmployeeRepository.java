@@ -51,4 +51,12 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
     @Modifying
     @Query("delete from Employee emp where emp.salary=(select MIN(emp2.salary) from Employee emp2)")
     public void deleteMinSalaryEmployees();
+
+    @Query(value = "select empId, empFirstName, empAge from employeettn where " +
+            "empLastName Like 'Singh'", nativeQuery = true)
+    public List<Object[]> findEmployeeWithLastNameSinghNQ();
+
+    @Modifying
+    @Query(value = "delete from employeettn where empAge>:enteredAge",nativeQuery = true)
+    public void deleteEmployeeByAge(@Param("enteredAge") int age);
 }

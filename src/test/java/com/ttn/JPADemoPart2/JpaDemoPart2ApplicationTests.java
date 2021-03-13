@@ -1,7 +1,9 @@
 package com.ttn.JPADemoPart2;
 
 import com.ttn.JPADemoPart2.employee.entities.Employee;
+import com.ttn.JPADemoPart2.employee.entities.payment.CreditCard;
 import com.ttn.JPADemoPart2.employee.repos.EmployeeRepository;
+import com.ttn.JPADemoPart2.employee.repos.PaymentRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +22,8 @@ class JpaDemoPart2ApplicationTests {
 
 	@Autowired
 	EmployeeRepository repository;
+	@Autowired
+	PaymentRepository prepository;
 
 	@Test
 	void contextLoads() {
@@ -91,7 +95,7 @@ class JpaDemoPart2ApplicationTests {
 	@Rollback(value = false)
 	public void testIncrementSalary()
 	{
-		repository.incrementSalaryBy(3000);
+		//repository.incrementSalaryBy(3000);
 	}
 
 	@Test
@@ -99,6 +103,34 @@ class JpaDemoPart2ApplicationTests {
 	@Rollback(value = false)
 	public void testDeleteEmployeeBySalary()
 	{
-		repository.deleteMinSalaryEmployees();
+		//repository.deleteMinSalaryEmployees();
+	}
+
+	@Test
+	public void testDisplayEmployeeLastNameSingh()
+	{
+		List<Object[]> employee = repository.findEmployeeWithLastNameSinghNQ();
+		for(Object[] objects : employee)
+		{
+			System.out.println(objects[0]+" "+objects[1]+" "+objects[2]);
+		}
+	}
+
+	@Test
+	@Transactional
+	@Rollback(value = false)
+	public void testDeleteEmployeeByAge()
+	{
+		repository.deleteEmployeeByAge(45);
+	}
+
+	@Test
+	public void addPaymentInfoSingleTable()
+	{
+		CreditCard cc = new CreditCard();
+		cc.setId(1);
+		cc.setAmount(23232.6);
+		cc.setCardnumber("21552161");
+		prepository.save(cc);
 	}
 }
