@@ -93,4 +93,12 @@ class JpaDemoPart2ApplicationTests {
 	{
 		repository.incrementSalaryBy(3000);
 	}
+
+	@Test
+	@Transactional
+	@Rollback(value = false)
+	public void testDeleteEmployeeBySalary()
+	{
+		repository.deleteMinSalaryEmployees();
+	}
 }

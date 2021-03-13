@@ -45,6 +45,10 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
 
     @Modifying
     @Query("update Employee emp set emp.salary=emp.salary+:incrementedAmount where " +
-            "emp.salary<AVG(emp.salary)")
+            "emp.id IN(select id from Employee emp2 where emp2.salary<(select AVG(emp3.salary) from Employee emp3))")
     public void incrementSalaryBy(@Param("incrementedAmount") double amount);
+
+    @Modifying
+    @Query("delete from Employee emp where emp.salary=(select MIN(emp2.salary) from Employee emp2)")
+    public void deleteMinSalaryEmployees();
 }
