@@ -12,6 +12,8 @@ import javax.persistence.Table;
 // for single table strategy use @DiscriminatorValue and also extend Payment class
 //@DiscriminatorValue(value = "cc")
 // for table type extend PaymentForTable class
+
+
 public class CreditCard extends PaymentForJoin{
     private String cardnumber;
 

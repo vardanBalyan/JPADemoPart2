@@ -39,26 +39,39 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
     @Query("from Employee")
     List<Employee> findAllPaging(Pageable pageable);
 
+
+    //JPQL 1.
     @Query("select emp.firstName, emp.lastName from Employee emp where " +
             "emp.salary>(select AVG(emp2.salary) from Employee emp2)")
     List<Object[]> findEmployeeBySalary(Sort sort);
 
-    //@Modifying
-    //@Query("update Employee emp set emp.salary=:incrementedAmount where " +
-           // "emp.id IN (select e.id FROM " +
-           // "(select e.id from Employee e where " +
-           // "e.salary<(select AVG(e2.salary) from Employee e2)))")
-   // public void incrementSalaryBy(@Param("incrementedAmount") double amount);
+
+    //JPQL 2.
+
+    @Query("select emp.id from Employee emp where salary < (select AVG(e.salary) from Employee e)")
+    public List<Integer> getEmployeeIdWithSalaryLessThanAverage();
+    @Modifying
+    @Query("update Employee emp set emp.salary =:incrementedAmount where emp.id=:givenId")
+    public void incrementSalaryBy(@Param("incrementedAmount") double amount, @Param("givenId") int id);
+
+    //JPQl 3.
+
+    @Query("select MIN(salary) from Employee")
+    public Double minSalary();
 
     @Modifying
-    @Query("delete from Employee emp where emp.salary=(select MIN(emp2.salary) from Employee emp2)")
-    public void deleteMinSalaryEmployees();
+    @Query("delete from Employee emp where emp.salary=:minSalary")
+    public void deleteMinSalaryEmployees(@Param("minSalary") Double minSalary);
+
+    //Native 1.
 
     @Query(value = "select empId, empFirstName, empAge from employeettn where " +
             "empLastName Like 'Singh'", nativeQuery = true)
     public List<Object[]> findEmployeeWithLastNameSinghNQ();
 
+    // Native 2.
     @Modifying
     @Query(value = "delete from employeettn where empAge>:enteredAge",nativeQuery = true)
     public void deleteEmployeeByAge(@Param("enteredAge") int age);
 }
+

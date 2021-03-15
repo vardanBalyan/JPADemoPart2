@@ -1,11 +1,10 @@
 package com.ttn.JPADemoPart2;
 
+import com.ttn.JPADemoPart2.employee.entities.EmployeeComponentMapping;
+import com.ttn.JPADemoPart2.employee.entities.SalaryComponentMapping;
 import com.ttn.JPADemoPart2.employee.entities.payment.Cheque;
 import com.ttn.JPADemoPart2.employee.entities.payment.CreditCard;
-import com.ttn.JPADemoPart2.employee.repos.EmployeeRepository;
-import com.ttn.JPADemoPart2.employee.repos.PaymentForJoinRepository;
-import com.ttn.JPADemoPart2.employee.repos.PaymentForTableRepository;
-import com.ttn.JPADemoPart2.employee.repos.PaymentRepository;
+import com.ttn.JPADemoPart2.employee.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
@@ -23,6 +22,8 @@ public class ServiceClass {
     PaymentForTableRepository paymentForTableRepository;
     @Autowired
     PaymentForJoinRepository paymentForJoinRepository;
+    @Autowired
+    EmpRepository empRepository;
 
     //JPQL
     //1.
@@ -43,7 +44,11 @@ public class ServiceClass {
     @Transactional
     public void updateSalaryOfEmployeeWithSalaryLessThanAverage()
     {
-        //repository.incrementSalaryBy(3000);
+        List<Integer> ids = repository.getEmployeeIdWithSalaryLessThanAverage();
+        for(Integer id : ids)
+        {
+            repository.incrementSalaryBy(25000, id);
+        }
     }
 
     //3.
@@ -51,7 +56,8 @@ public class ServiceClass {
     @Transactional
     public void deleteEmployeeWithMinimumSalary()
     {
-        //repository.deleteMinSalaryEmployees();
+        Double minSalary = repository.minSalary();
+        repository.deleteMinSalaryEmployees(minSalary);
     }
 
     //Native
@@ -77,6 +83,18 @@ public class ServiceClass {
 
     //Inheritance Mapping
 
+    //1.
+
+    public void addPaymentInfoSingleTable()
+    {
+        Cheque ch = new Cheque();
+        ch.setId(2);
+        ch.setAmount(23232.6);
+        ch.setChequenumber("1234");
+        //paymentRepository.save(ch);
+    }
+
+    //2. Using Join
     public void addDataInChequeForJoinedInheritance()
     {
         Cheque ch = new Cheque();
@@ -95,5 +113,24 @@ public class ServiceClass {
         cc.setCardnumber("536151");
 
         paymentForJoinRepository.save(cc);
+    }
+
+    // component mapping
+
+    public void componentMapping()
+    {
+        EmployeeComponentMapping emp = new EmployeeComponentMapping();
+        emp.setId(12);
+        emp.setFirstName("Vardan");
+        emp.setLastName("Balyan");
+        emp.setAge(23);
+        SalaryComponentMapping sal = new SalaryComponentMapping();
+        sal.setBasicSalary(23000);
+        sal.setBonusSalary(2000);
+        sal.setTaxAmount(1734);
+        sal.setSpecialAllowanceSalary(5000);
+        emp.setSalaryComponentMapping(sal);
+
+        empRepository.save(emp);
     }
 }

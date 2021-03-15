@@ -11,7 +11,13 @@ public class JpaDemoPart2Application {
 		ApplicationContext applicationContext = SpringApplication.run(JpaDemoPart2Application.class, args);
 		ServiceClass service = applicationContext.getBean(ServiceClass.class);
 		//service.findEmployeeBySalaryGreaterThanAverage();
-		service.displayEmployeeWithLastNameSingh();
+		//service.updateSalaryOfEmployeeWithSalaryLessThanAverage();
+		//service.deleteEmployeeWithMinimumSalary();
+		//service.displayEmployeeWithLastNameSingh();
+		//service.deleteEmployeeHavingAgeMoreThan45();
+		//service.addDataInChequeForJoinedInheritance();
+		//service.addDataInCreditCardForJoinedInheritance();
+		service.componentMapping();
 	}
 
 }

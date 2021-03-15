@@ -102,13 +102,13 @@ class JpaDemoPart2ApplicationTests {
 		//repository.incrementSalaryBy(3000);
 	}
 
-	@Test
+	/*@Test
 	@Transactional
 	@Rollback(value = false)
 	public void testDeleteEmployeeBySalary()
 	{
 		//repository.deleteMinSalaryEmployees();
-	}
+	}*/
 
 	@Test
 	public void testDisplayEmployeeLastNameSingh()
@@ -120,13 +120,13 @@ class JpaDemoPart2ApplicationTests {
 		}
 	}
 
-	@Test
+	/*@Test
 	@Transactional
 	@Rollback(value = false)
 	public void testDeleteEmployeeByAge()
 	{
 		repository.deleteEmployeeByAge(45);
-	}
+	}*/
 
 	// for single class inheritance
 	@Test
