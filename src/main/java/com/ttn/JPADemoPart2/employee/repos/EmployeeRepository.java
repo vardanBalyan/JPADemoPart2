@@ -43,10 +43,12 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
             "emp.salary>(select AVG(emp2.salary) from Employee emp2)")
     List<Object[]> findEmployeeBySalary(Sort sort);
 
-    @Modifying
-    @Query("update Employee emp set emp.salary=emp.salary+:incrementedAmount where " +
-            "emp.id IN(select id from Employee emp2 where emp2.salary<(select AVG(emp3.salary) from Employee emp3))")
-    public void incrementSalaryBy(@Param("incrementedAmount") double amount);
+    //@Modifying
+    //@Query("update Employee emp set emp.salary=:incrementedAmount where " +
+           // "emp.id IN (select e.id FROM " +
+           // "(select e.id from Employee e where " +
+           // "e.salary<(select AVG(e2.salary) from Employee e2)))")
+   // public void incrementSalaryBy(@Param("incrementedAmount") double amount);
 
     @Modifying
     @Query("delete from Employee emp where emp.salary=(select MIN(emp2.salary) from Employee emp2)")
