@@ -2,12 +2,16 @@ package com.ttn.JPADemoPart2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 public class JpaDemoPart2Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(JpaDemoPart2Application.class, args);
+		ApplicationContext applicationContext = SpringApplication.run(JpaDemoPart2Application.class, args);
+		ServiceClass service = applicationContext.getBean(ServiceClass.class);
+		//service.findEmployeeBySalaryGreaterThanAverage();
+		service.displayEmployeeWithLastNameSingh();
 	}
 
 }

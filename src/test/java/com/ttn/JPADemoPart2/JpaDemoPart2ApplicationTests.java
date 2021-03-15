@@ -25,7 +25,7 @@ class JpaDemoPart2ApplicationTests {
 	@Autowired
 	EmployeeRepository repository;
 	@Autowired
-	PaymentRepository prepository;
+	PaymentRepository paymentRepository;
 	@Autowired
 	PaymentForTableRepository paymentForTableRepository;
 
@@ -144,11 +144,11 @@ class JpaDemoPart2ApplicationTests {
 	public void addDataInChequeForTableInheritance()
 	{
 		Cheque ch = new Cheque();
-		ch.setId(1);
+		ch.setId(2);
 		ch.setAmount(23334);
 		ch.setChequenumber("536151");
 
-		paymentForTableRepository.save(ch);
+		//paymentForTableRepository.save(ch);
 	}
 
 	// for table inheritance
@@ -156,11 +156,32 @@ class JpaDemoPart2ApplicationTests {
 	public void addDataInCreditCardForTableInheritance()
 	{
 		CreditCard cc = new CreditCard();
-		cc.setId(1);
+		cc.setId(2);
 		cc.setAmount(23334);
 		cc.setCardnumber("536151");
 
-		paymentForTableRepository.save(cc);
+		//paymentForTableRepository.save(cc);
 	}
 
+	@Test
+	public void addDataInChequeForJoinedInheritance()
+	{
+		Cheque ch = new Cheque();
+		ch.setId(2);
+		ch.setAmount(23334);
+		ch.setChequenumber("536151");
+
+		//paymentRepository.save(ch);
+	}
+
+	@Test
+	public void addDataInCreditCardForJoinedInheritance()
+	{
+		CreditCard cc = new CreditCard();
+		cc.setId(3);
+		cc.setAmount(23334);
+		cc.setCardnumber("536151");
+
+		//paymentRepository.save(cc);
+	}
 }

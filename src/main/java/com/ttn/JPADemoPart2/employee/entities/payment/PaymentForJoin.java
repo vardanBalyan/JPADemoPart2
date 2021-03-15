@@ -3,9 +3,9 @@ package com.ttn.JPADemoPart2.employee.entities.payment;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "payment")
-@DiscriminatorColumn(name = "pmode", discriminatorType = DiscriminatorType.STRING)
-public class Payment {
+@Table(name = "paymentnew")
+@Inheritance(strategy = InheritanceType.JOINED)
+public class PaymentForJoin {
     @Id
     private int id;
     private double amount;
